@@ -1,0 +1,6 @@
+231013.144711 ERROR [SnmpObserver] java.lang.NullPointerException: Cannot invoke "org.apache.kafka.clients.consumer.Consumer.subscribe(java.util.Collection)" because "com.vhc.kafka.consumer.ConsumerService.consumer" is null
+java.lang.NullPointerException: Cannot invoke "org.apache.kafka.clients.consumer.Consumer.subscribe(java.util.Collection)" because "com.vhc.kafka.consumer.ConsumerService.consumer" is null
+	at com.vhc.kafka.consumer.ConsumerService.consumeMessages(ConsumerService.java:43)
+	at com.vhc.kafka.consumer.ConsumerService.main(ConsumerService.java:202)
+	at com.vhc.snmp.SnmpObserver.run(SnmpObserver.java:47)
+	at com.vhc.snmp.SnmpObserver.main(SnmpObserver.java:39)

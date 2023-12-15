@@ -1,6 +1,5 @@
 package com.vhc.kafka.consumer;
 
-import conf.KafkaConstant;
 
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
@@ -10,6 +9,7 @@ import org.apache.kafka.common.serialization.StringDeserializer;
 
 import com.vhc.model.AlarmType;
 
+import java.util.Map;
 import java.util.Properties;
 
 import org.apache.kafka.clients.consumer.Consumer;
@@ -27,7 +27,12 @@ public class ConsumerCreator {
         props.put(ConsumerConfig.HEARTBEAT_INTERVAL_MS_CONFIG, KafkaConsumerConfig.KAFKA_CONFIG.getProperty(KafkaConsumerSetting.HEARTBEAT_INTERVAL_MS));
         props.put(ConsumerConfig.SESSION_TIMEOUT_MS_CONFIG, KafkaConsumerConfig.KAFKA_CONFIG.getProperty(KafkaConsumerSetting.SESSION_TIMEOUT_MS));
         props.put(ConsumerConfig.MAX_POLL_INTERVAL_MS_CONFIG, KafkaConsumerConfig.KAFKA_CONFIG.getProperty(KafkaConsumerSetting.MAX_POLL_INTERVAL_MS));
+        props.put(ConsumerConfig.GROUP_INSTANCE_ID_CONFIG, "instace-id-1");
 
+        for (Map.Entry<Object, Object> entry : props.entrySet()) {
+            System.out.println(entry.getKey() + ": " + entry.getValue());
+        }
+        
         return new KafkaConsumer<>(props, new LongDeserializer(), new JsonDeserializer<>(targetType));
     }
     

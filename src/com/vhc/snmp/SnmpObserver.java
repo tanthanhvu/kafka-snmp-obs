@@ -15,6 +15,7 @@ import com.vhc.model.StructAlarm;
 import com.vhc.util.DbUtil;
 
 
+
 public class SnmpObserver {
 	final static Logger logger = Logger.getLogger(SnmpObserver.class); 
 	
@@ -31,8 +32,8 @@ public class SnmpObserver {
 	}
 	
 	public static void main(String[] args) throws FileNotFoundException, IOException, InterruptedException {
-//		AppConfig.loadOIDMap();  
-//		DbUtil.init();
+		AppConfig.loadOIDMap();  
+		DbUtil.init();
 		KafkaConsumerConfig.loadKafkaConsumerConfig();
 		
 		new SnmpObserver().run();
@@ -49,10 +50,10 @@ public class SnmpObserver {
 				
 				mProcessAlarm.start();  
 				
-//				new Thread(mProcessAlarm._2GThread).start();
-//				new Thread(mProcessAlarm._3GThread).start();
-//				new Thread(mProcessAlarm._4GThread).start();
-//				new Thread(mProcessAlarm._coreThread).start(); 
+				new Thread(mProcessAlarm._2GThread).start();
+				new Thread(mProcessAlarm._3GThread).start();
+				new Thread(mProcessAlarm._4GThread).start();
+				new Thread(mProcessAlarm._coreThread).start(); 
 			}
 		
 		while(true)
@@ -62,7 +63,8 @@ public class SnmpObserver {
 			try
 			{
 				if(
-						!ConsumerService.isConsumerServiceRunning() && !ConsumerService.isConsumerConnected())
+						!ConsumerService.isConsumerConnected()) 
+
 //					!ConsumerService.isKafkaServerRunning())
 				{
 					System.out.println("\n\n[INFO] => Trying to reconnect to Kafka server ... \n\n");

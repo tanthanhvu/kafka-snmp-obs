@@ -1,7 +1,0 @@
-231013.180041 ERROR [ProcessAlarm] ---------------_QUEUE_SIZE = 10000
-231013.180041 ERROR [ProcessAlarm] ---------------_mAlarmQueue.size = 300
-231013.180041 ERROR [ProcessAlarm] ---------------_queue2G.size = 0
-231013.180041 ERROR [ProcessAlarm] ---------------_queue3G.size = 0
-231013.180041 ERROR [ProcessAlarm] ---------------_queue4G.size = 0
-231013.180041 ERROR [ProcessAlarm] ---------------_queueCore.size = 0
-231013.180041 ERROR [ProcessAlarm] ---------------_Loi ProcessAlarm run(): java.lang.NullPointerException: Cannot invoke "java.sql.Connection.prepareStatement(String)" because "connection" is null

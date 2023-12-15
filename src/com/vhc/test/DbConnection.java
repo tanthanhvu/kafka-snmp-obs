@@ -9,10 +9,14 @@ import java.time.format.DateTimeFormatter;
 
 import com.vhc.model.StructAlarm;
 
+
 public class DbConnection {
-    private static final String DB_URL = "jdbc:oracle:thin:@14.160.91.174:1621:orcl";
-    private static final String DB_USER = "hr";
-    private static final String DB_PASSWORD = "hr";
+    private static final String DB_URL = "jdbc:oracle:thin:@10.51.44.198:1521/SOCA_SRV";
+    private static final String DB_USER = "soca";
+    private static final String DB_PASSWORD = "xE9GaBJsbX";
+//    private static final String DB_URL = "jdbc:oracle:thin:@14.160.91.174:1621:orcl";
+//    private static final String DB_USER = "hr";
+//    private static final String DB_PASSWORD = "hr";
 
     public static Connection getConnection() {
         Connection connection = null;

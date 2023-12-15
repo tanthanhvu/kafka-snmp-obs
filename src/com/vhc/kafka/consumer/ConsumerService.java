@@ -32,7 +32,6 @@ import org.apache.log4j.Logger;
 import com.vhc.model.StructAlarm;
 import com.vhc.snmp.SnmpObserver;
 
-import conf.KafkaConstant;
 
 public class ConsumerService extends Thread{
 
@@ -111,7 +110,7 @@ public class ConsumerService extends Thread{
         int retryCount = 0;
         boolean commitSucceeded = false;
 
-        while (!commitSucceeded && retryCount < KafkaConstant.MAX_COMMIT_RETRIES) {
+        while (!commitSucceeded && retryCount < 5) {
             try {
                 consumer.commitAsync();
                 commitSucceeded = true;
@@ -165,11 +164,12 @@ public class ConsumerService extends Thread{
     	
     	try
     	{
-    		_f = verifyKafkaConnection(KafkaConstant.KAFKA_BROKERS);
+    		_f = verifyKafkaConnection(KafkaConsumerConfig.KAFKA_CONFIG.getProperty(KafkaConsumerSetting.KAFKA_BROKERS));
     	}
     	catch(Exception e)
     	{
     		_f = false;
+    		System.out.println("Error: " + e.getMessage());
     	}
     	return _f;
     }
@@ -184,10 +184,15 @@ public class ConsumerService extends Thread{
         Properties props = new Properties();
         
         props.put("bootstrap.servers", bootstrap);
+//        
+//        props.put("request.timeout.ms", 3000);
+//        
+//        props.put("connections.max.idle.ms", 5000);
         
-        props.put("request.timeout.ms", 3000);
-        
-        props.put("connections.max.idle.ms", 5000);
+// test cho server lag      
+      props.put("request.timeout.ms", 30000);
+      props.put("connections.max.idle.ms", 30000);
+
 
         _client = AdminClient.create(props);
         
@@ -209,6 +214,7 @@ public class ConsumerService extends Thread{
 			consumeMessages(KafkaConsumerConfig.KAFKA_CONFIG.getProperty(KafkaConsumerSetting.TOPIC_NAME));
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
+			restart();
 			e.printStackTrace();
 		}
     }

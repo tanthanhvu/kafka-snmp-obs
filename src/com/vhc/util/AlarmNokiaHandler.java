@@ -9,6 +9,7 @@ import org.apache.log4j.Logger;
 
 import com.vhc.model.StructAlarm;
 
+
 public class AlarmNokiaHandler implements  Runnable{
 
 	private static final Logger logger = Logger.getLogger(AlarmNokiaHandler.class);

@@ -5,8 +5,8 @@ import java.util.concurrent.BlockingQueue;
 
 import org.apache.log4j.Logger;
 
-import com.vhc.model.StructAlarm;
 import com.vhc.util.AlarmNokiaHandler;
+import com.vhc.model.StructAlarm;
 import com.vhc.test.DbConnection;
 
 public class ProcessAlarm extends Thread{
@@ -33,15 +33,15 @@ public class ProcessAlarm extends Thread{
 		// TODO Auto-generated constructor stub
 		_mAlarmQueue = _alarmQueue;
 		
-//		queue2G = new ArrayBlockingQueue<StructAlarm>(QUEUE_SIZE);
-//		queue3G = new ArrayBlockingQueue<StructAlarm>(QUEUE_SIZE);
-//		queue4G = new ArrayBlockingQueue<StructAlarm>(QUEUE_SIZE);
-//		queueCore = new ArrayBlockingQueue<StructAlarm>(QUEUE_SIZE); 
-//		
-//		_2GThread = new AlarmNokiaHandler("RAN_2G", queue2G);
-//		_3GThread = new AlarmNokiaHandler("RAN_3G", queue3G);
-//		_4GThread = new AlarmNokiaHandler("RAN_4G", queue4G);
-//		_coreThread = new AlarmNokiaHandler("CORE", queueCore);   
+		queue2G = new ArrayBlockingQueue<StructAlarm>(QUEUE_SIZE);
+		queue3G = new ArrayBlockingQueue<StructAlarm>(QUEUE_SIZE);
+		queue4G = new ArrayBlockingQueue<StructAlarm>(QUEUE_SIZE);
+		queueCore = new ArrayBlockingQueue<StructAlarm>(QUEUE_SIZE); 
+		
+		_2GThread = new AlarmNokiaHandler("RAN_2G", queue2G);
+		_3GThread = new AlarmNokiaHandler("RAN_3G", queue3G);
+		_4GThread = new AlarmNokiaHandler("RAN_4G", queue4G);
+		_coreThread = new AlarmNokiaHandler("CORE", queueCore);   
 	}
 	
 	@Override
@@ -55,32 +55,22 @@ public class ProcessAlarm extends Thread{
 				//process alarm, remore after things done
 				StructAlarm structAlarm = _mAlarmQueue.take(); 
 				
-				DbConnection dbConnection = new DbConnection();
-				dbConnection.insertData(structAlarm);
 				
 //				System.out.println("aa12");
 //				 
-//				if(structAlarm.network.equals("2G") && queue2G.size() < QUEUE_SIZE) {
-//					System.out.println("b12");
-//					queue2G.add(structAlarm);
-//					System.out.println("b13");
-//					//System.out.println("Add 2G succ alarmId = "+structAlarm.nbiAlarmId);
-//				} else if(structAlarm.network.equals("3G") && queue3G.size() < QUEUE_SIZE) {
-//					System.out.println("b12");
-//					queue3G.add(structAlarm);
-//					System.out.println("b12");
-//					//System.out.println("Add 3g succ alarmId = "+structAlarm.nbiAlarmId);
-//				} else if(structAlarm.network.equals("RAN_4G") && queue4G.size() < QUEUE_SIZE) {
-//					System.out.println("b12");
-//					queue4G.add(structAlarm);
-//					System.out.println("b12");
-//					//System.out.println("Add 4g succ alarmId = "+structAlarm.nbiAlarmId);
-//				} else if (queueCore.size() < QUEUE_SIZE){
-//					System.out.println("b12");
-//					queueCore.add(structAlarm);
-//					System.out.println("b12");
-//					//System.out.println("Add core succ alarmId = "+structAlarm.nbiAlarmId);
-//				}
+				if(structAlarm.network.equals("2G") && queue2G.size() < QUEUE_SIZE) {
+					queue2G.add(structAlarm);
+					System.out.println("Add 2G succ alarmId = "+structAlarm.nbiAlarmId);
+				} else if(structAlarm.network.equals("3G") && queue3G.size() < QUEUE_SIZE) {
+					queue3G.add(structAlarm);
+					System.out.println("Add 3g succ alarmId = "+structAlarm.nbiAlarmId);
+				} else if(structAlarm.network.equals("RAN_4G") && queue4G.size() < QUEUE_SIZE) {
+					queue4G.add(structAlarm);
+					System.out.println("Add 4g succ alarmId = "+structAlarm.nbiAlarmId);
+				} else if (queueCore.size() < QUEUE_SIZE){
+					queueCore.add(structAlarm);
+					System.out.println("Add core succ alarmId = "+structAlarm.nbiAlarmId);
+				}
 			}
 		}
 		catch(Exception e)

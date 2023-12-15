@@ -18,6 +18,7 @@ import org.apache.log4j.Logger;
 import com.jolbox.bonecp.BoneCP;
 import com.jolbox.bonecp.BoneCPConfig;
 import com.vhc.common.AppConfig;
+
 import com.vhc.model.AlarmType;
 import com.vhc.model.CellN;
 import com.vhc.model.CellN3G;
@@ -73,6 +74,7 @@ public class DbUtil {
 		try {
 			BoneCPConfig boneCPConfigDb = new BoneCPConfig(AppConfig.loadDBConnectInfo());
 			dbConnectionPool = new BoneCP(boneCPConfigDb);
+			System.out.println(dbConnectionPool);
 			
 			logger.debug("[INFO] Connection to the database successful");
 		} catch (Exception e) {
@@ -96,6 +98,7 @@ public class DbUtil {
 	 * @throws SQLException
 	 */ 
 	public static Connection getConnection() throws SQLException {
+		System.out.println(dbConnectionPool);
 		return dbConnectionPool.getConnection();
 	}
 	
